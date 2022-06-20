@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 
-f = csv.writer(open('m-directory.csv', 'w'))
-f.writerow(['Links','Title','Address','Telephone/Fax'])
+f = csv.writer(open('m23336666632-directory.csv', 'w'))
+f.writerow(['Links','Title','Address','Telephone/Fax','Category'])
 
 dash = ["https://www.directory.im/"]
 for urls in dash:
@@ -29,9 +29,14 @@ for urls in dash:
          for add in companyfieSoups.select('div[class="listing-left"] > p[class="listing-add"]'):
              add = add.text 
          for telephone in companyfieSoups.select('ul[class="listing-cont"] > li'):
-             telephone = telephone.text  
-             info = [compfile,title,add,telephone]
-             print(info)
+             telephone = telephone.text
+             Categoryyy = []
+         for categories in companyfieSoups.select('div[class="listing-category"]'):
+             Categoryyyss = categories.text.strip().replace("Categories: ", "").rstrip().replace("  ", "")
+             Categoryyy.append(Categoryyyss)
+             csvCategory = " ".join(Categoryyy)
+             print(csvCategory)
+             info = [compfile,title,add,telephone,csvCategory]
              f.writerow(info)
              break     
 

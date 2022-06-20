@@ -2,10 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 
-f = csv.writer(open('B-NEWWWWWW-isleofman_com.csv', 'w'))
+f = csv.writer(open('A-a2z-isleofman_com.csv', 'w'))
 f.writerow(['Links','Title','Address','Telephone','Category'])
 
-dash = ["https://www.isleofman.com/directory/AToZ/B"]
+dash = ["https://www.isleofman.com/directory/AToZ/A"]
 for urls in dash:
  r = requests.get(urls)		# r variable has all the HTML code
  soup = BeautifulSoup(r.content, 'html.parser')
@@ -24,11 +24,11 @@ for urls in dash:
         adds= ''
         for add in soups789.select('div[class="col-left"] > p[class="listing-add"]'):
             if(add.text != ''):
-               adds = add.text
-        for telephone in soups789.select('ul[class="listing-cont"] > li'):
-            telephone = telephone.text
-        for categories in soups789.select('div[class="listing-category"] > p'):
-            categories = categories.text
+               adds = add.text.strip()
+        for telephone in soups789.select('ul[class="listing-cont"] > li > strong'):
+            telephone = telephone.text.strip()
+        for categories in soups789.select('div[class="listing-category"] > p > a'):
+            categories = categories.text.strip()
             info = [links456,title,adds,telephone,categories]
             print(info)
             f.writerow(info)
